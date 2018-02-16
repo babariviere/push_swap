@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:18:56 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 13:32:28 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/16 14:21:12 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ t_stack		*stack_create(size_t size)
 
 	if ((res = ft_memalloc(sizeof(t_stack))) == 0)
 		return (0);
-	if ((res->data = ft_memalloc(sizeof(int) * (size + 1))) == 0)
+	if ((res->data = ft_memalloc(sizeof(int) * size)) == 0)
 		return (0);
 	res->len = 0;
+	res->alloc = size;
 	return (res);
 }
 

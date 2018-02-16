@@ -6,47 +6,42 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:12:39 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 13:45:52 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/16 14:35:31 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ps.h"
 
-void	print_stack(const t_stack *stack)
+void	exec_checker(t_stack *a, t_stack *b)
 {
-	size_t	idx;
+	t_instr		instr;
 
-	idx = stack->len;
-	while (idx-- > 0)
-	{
-		ft_putnbr(stack->data[idx]);
-		ft_putchar('\n');
-	}
+	while ((instr = read_instr()) > 0)
+		apply_instr(a, b, instr);
+	if (instr == INSTR_INV)
+		ft_putendl_fd("Error", 2);
+	else if (!stack_is_sort(a) || b->len > 0)
+		ft_putendl("KO");
+	else
+		ft_putendl("OK");
 }
 
 int		main(int ac, char **av)
 {
-	t_stack		*st;
+	t_stack		*a;
+	t_stack		*b;
 
-	st = stack_from_args(ac, av);
-	print_stack(st);
-	ft_putendl("swap");
-	stack_swap(st);
-	print_stack(st);
-	ft_putendl("rotate");
-	stack_rotate(st);
-	print_stack(st);
-	ft_putendl("rotate reverse");
-	stack_rrotate(st);
-	print_stack(st);
-	ft_putendl("is sort");
-	ft_putnbr(stack_is_sort(st));
-	ft_putchar('\n');
-	ft_putendl("swap");
-	stack_swap(st);
-	print_stack(st);
-	ft_putendl("is sort");
-	ft_putnbr(stack_is_sort(st));
-	ft_putchar('\n');
+	a = 0;
+	b = 0;
+	if ((a = stack_from_args(ac, av)) == 0)
+		ft_putendl_fd("Error", 2);
+	else if ((b = stack_create(a->len)) == 0)
+		ft_putendl_fd("Error", 2);
+	else if (stack_has_dup(a))
+		ft_putendl_fd("Error", 2);
+	else
+		exec_checker(a, b);
+	stack_delete(&a);
+	stack_delete(&b);
 	return (0);
 }
