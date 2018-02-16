@@ -3,7 +3,8 @@ NAME_PS=push_swap
 
 SRC_CHK=src/checker.c
 SRC_PS=src/push_swap.c
-SRC_NAME=stack.c stack_op.c stack_chk.c args.c instr.c
+SRC_NAME=stack.c stack_op.c stack_chk.c args.c instr.c calc.c\
+		 sort.c
 SRC=$(addprefix src/, $(SRC_NAME))
 
 OBJ_CHK=obj/checker.o

@@ -6,13 +6,13 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:12:39 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 14:58:15 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/16 15:04:07 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ps.h"
 
-void	print_stack(t_stack *st, char name)
+static void	print_stack(t_stack *st, char name)
 {
 	size_t		idx;
 
@@ -27,7 +27,7 @@ void	print_stack(t_stack *st, char name)
 	ft_putchar('\n');
 }
 
-void	exec_checker(t_stack *a, t_stack *b, t_opts opts)
+static void	exec_checker(t_stack *a, t_stack *b, t_opts opts)
 {
 	t_instr		instr;
 
@@ -50,7 +50,7 @@ void	exec_checker(t_stack *a, t_stack *b, t_opts opts)
 		ft_putendl("OK");
 }
 
-int		main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	t_stack		*a;
 	t_stack		*b;

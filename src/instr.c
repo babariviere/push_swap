@@ -6,11 +6,12 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:53:13 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 14:08:11 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/16 15:06:27 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ps.h"
+
 static t_instr	into_instr(char *buf)
 {
 	if (ft_strequ(buf, "sa"))
@@ -49,6 +50,32 @@ t_instr			read_instr(void)
 	instr = into_instr(buf);
 	free(buf);
 	return (instr);
+}
+
+void			write_instr(t_instr instr)
+{
+	if (instr == INSTR_SA)
+		ft_putstr("sa");
+	else if (instr == INSTR_SB)
+		ft_putstr("sb");
+	else if (instr == INSTR_SS)
+		ft_putstr("ss");
+	else if (instr == INSTR_PA)
+		ft_putstr("pa");
+	else if (instr == INSTR_PB)
+		ft_putstr("pb");
+	else if (instr == INSTR_RA)
+		ft_putstr("ra");
+	else if (instr == INSTR_RB)
+		ft_putstr("rb");
+	else if (instr == INSTR_RR)
+		ft_putstr("rr");
+	else if (instr == INSTR_RRA)
+		ft_putstr("rra");
+	else if (instr == INSTR_RRB)
+		ft_putstr("rrb");
+	else if (instr == INSTR_RRR)
+		ft_putstr("rrr");
 }
 
 static void		apply_instr_push(t_stack *a, t_stack *b, t_instr instr)

@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:30:51 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 14:57:03 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/16 15:01:13 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int	is_number(const char *s)
 	return (1);
 }
 
+// TODO: use atol and check if it can be stored in an int
 static int	parse_arg(char *arg, t_stack *res, t_opts *opts)
 {
 	char	**nbs;
