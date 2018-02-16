@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:18:56 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 14:21:12 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/16 16:25:30 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void		stack_delete(t_stack **stack)
 	t_stack	*tmp;
 
 	tmp = *stack;
+	if (tmp == 0)
+		return ;
 	if (tmp->data)
 		free(tmp->data);
 	ft_memdel((void **)stack);

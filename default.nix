@@ -6,6 +6,7 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     clang
+    ruby
     ];
 
   src =./.;

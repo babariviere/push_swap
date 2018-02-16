@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:12:39 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 15:04:07 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/16 16:24:01 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,44 @@ static void	print_stack(t_stack *st, char name)
 	ft_putchar('\n');
 }
 
-static void	exec_checker(t_stack *a, t_stack *b, t_opts opts)
+static void	exec_instr(t_stack *a, t_stack *b, t_stack *instr,
+		t_opts opts)
 {
-	t_instr		instr;
+	size_t		idx;
 
+	idx = 0;
 	if (opts.verbose)
 		print_stack(a, 'a');
-	while ((instr = read_instr()) > 0)
-	{
-		apply_instr(a, b, instr);
+	while (idx < instr->len)
+	{	
+		apply_instr(a, b, instr->data[idx++]);
 		if (opts.verbose)
 		{
 			print_stack(a, 'a');
 			print_stack(b, 'b');
 		}
 	}
-	if (instr == INSTR_INV)
-		ft_putendl_fd("Error", 2);
-	else if (!stack_is_sort(a) || b->len > 0)
+}
+
+static void	exec_checker(t_stack *a, t_stack *b, t_opts opts)
+{
+	t_instr		tmp;
+	t_stack		*instr;
+
+	instr = stack_create(1024);
+	while ((tmp = read_instr()) > 0)
+		stack_push(instr, tmp);
+	if (tmp == INSTR_INV)
+	{
+		stack_delete(&instr);
+		return (ft_putendl_fd("Error", 2));
+	}
+	exec_instr(a, b, instr, opts);
+	if (!stack_is_sort(a) || b->len > 0)
 		ft_putendl("KO");
 	else
 		ft_putendl("OK");
+	stack_delete(&instr);
 }
 
 int			main(int ac, char **av)
