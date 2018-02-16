@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:53:13 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 15:06:27 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/16 16:45:44 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,35 +78,3 @@ void			write_instr(t_instr instr)
 		ft_putstr("rrr");
 }
 
-static void		apply_instr_push(t_stack *a, t_stack *b, t_instr instr)
-{
-	if (instr == INSTR_PA)
-	{
-		if (b->len == 0)
-			return ;
-		stack_push(a, stack_pop(b));
-	}
-	if (instr == INSTR_PB)
-	{
-		if (a->len == 0)
-			return ;
-		stack_push(b, stack_pop(a));
-	}
-}
-
-void			apply_instr(t_stack *a, t_stack *b, t_instr instr)
-{
-	if (instr == INSTR_SA || instr == INSTR_SS)
-		stack_swap(a);
-	if (instr == INSTR_SB || instr == INSTR_SS)
-		stack_swap(b);
-	apply_instr_push(a, b, instr);
-	if (instr == INSTR_RA || instr == INSTR_RR)
-		stack_rotate(a);
-	if (instr == INSTR_RB || instr == INSTR_RR)
-		stack_rotate(b);
-	if (instr == INSTR_RRA || instr == INSTR_RRR)
-		stack_rrotate(a);
-	if (instr == INSTR_RRB || instr == INSTR_RRR)
-		stack_rrotate(b);
-}

@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:13:46 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 15:58:40 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/16 17:08:17 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct	s_opts {
 void			write_instr(t_instr instr);
 t_instr			read_instr(void);
 void			apply_instr(t_stack *a, t_stack *b, t_instr instr);
+void			apply_instr_and_save(t_stack *a, t_stack *b, t_instr tmp,
+		t_stack *instr);
 
 t_stack			*stack_create(size_t size);
 void			stack_delete(t_stack **stack);
@@ -55,11 +57,12 @@ void			stack_rrotate(t_stack *stack);
 int				stack_is_sort(const t_stack *stack);
 int				stack_has_dup(const t_stack *stack);
 
+int				stack_cmp_top(t_stack *st);
+int				stack_cmp_bot(t_stack *st);
+int				stack_cmp_bot_top(t_stack *st);
+
 t_stack			*stack_from_args(int ac, char **av, t_opts *opts);
 
-int				calc_average(const t_stack *st);
-int				get_lower(const t_stack *st);
-int				get_highest(const t_stack *st);
 void			sort_stack(t_stack *a, t_stack *b, t_stack *instr);
 
 #endif
