@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:23:31 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 14:20:47 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/16 14:45:12 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,20 @@ void	stack_rotate(t_stack *stack)
 
 	if (stack->len <= 1)
 		return ;
+	first = stack->data[stack->len - 1];
+	idx = stack->len - 1;
+	while (idx-- > 0)
+		stack->data[idx + 1] = stack->data[idx];
+	stack->data[0] = first;
+}
+
+void	stack_rrotate(t_stack *stack)
+{
+	size_t		idx;
+	int			first;
+
+	if (stack->len <= 1)
+		return ;
 	first = stack->data[0];
 	idx = 1;
 	while (idx < stack->len)
@@ -53,18 +67,4 @@ void	stack_rotate(t_stack *stack)
 		idx++;
 	}
 	stack->data[stack->len - 1] = first;
-}
-
-void	stack_rrotate(t_stack *stack)
-{
-	size_t		idx;
-	int			last;
-
-	if (stack->len <= 1)
-		return ;
-	last = stack->data[stack->len - 1];
-	idx = stack->len - 1;
-	while (idx-- > 0)
-		stack->data[idx + 1] = stack->data[idx];
-	stack->data[0] = last;
 }
