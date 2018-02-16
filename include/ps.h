@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:13:46 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 14:32:37 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/16 14:53:46 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ typedef struct	s_stack {
 	size_t	len;
 }				t_stack;
 
+typedef struct	s_opts {
+	int		verbose;
+}				t_opts;
+
 t_instr			read_instr(void);
 void			apply_instr(t_stack *a, t_stack *b, t_instr instr);
 
@@ -50,6 +54,6 @@ void		stack_rrotate(t_stack *stack);
 int			stack_is_sort(const t_stack *stack);
 int			stack_has_dup(const t_stack *stack);
 
-t_stack		*stack_from_args(int ac, char **av);
+t_stack		*stack_from_args(int ac, char **av, t_opts *opts);
 
 #endif
