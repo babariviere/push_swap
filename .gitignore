@@ -53,3 +53,6 @@ dkms.conf
 
 checker
 push_swap
+
+/tester
+/test.sh
