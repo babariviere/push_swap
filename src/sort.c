@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 15:17:10 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 15:38:40 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/16 15:53:44 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,5 @@ void		sort_stack(t_stack *a, t_stack *b, t_stack *instr)
 		return ;
 	//split_stack_a(a, b, instr);
 	naive_sort(a, b, instr);
+	sort_stack(a, b, instr);
 }

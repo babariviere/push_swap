@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:23:31 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 14:45:12 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/16 16:04:16 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	stack_push(t_stack *stack, int nb)
 {
 	if ((stack->len + 1) >= stack->alloc)
 	{
-		stack->data = ft_realloc(stack->data, stack->alloc, stack->alloc * 2);
+		stack->data = ft_realloc(stack->data, sizeof(int) * stack->alloc,
+				sizeof(int) * (stack->alloc * 2));
 		stack->alloc *= 2;
 	}
 	stack->data[stack->len++] = nb;
