@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:23:31 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 16:04:16 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/17 18:26:16 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	stack_swap(t_stack *stack)
 
 	if (stack->len <= 1)
 		return ;
-	tmp = stack->data[stack->len - 2];
-	stack->data[stack->len - 2] = stack->data[stack->len - 1];
-	stack->data[stack->len - 1] = tmp;
+	tmp = ST_TOPN(stack);
+	ST_TOPN(stack) = ST_TOP(stack);
+	ST_TOP(stack) = tmp;
 }
 
 void	stack_rotate(t_stack *stack)
@@ -56,16 +56,16 @@ void	stack_rotate(t_stack *stack)
 void	stack_rrotate(t_stack *stack)
 {
 	size_t		idx;
-	int			first;
+	int			last;
 
 	if (stack->len <= 1)
 		return ;
-	first = stack->data[0];
+	last = stack->data[0];
 	idx = 1;
 	while (idx < stack->len)
 	{
 		stack->data[idx - 1] = stack->data[idx];
 		idx++;
 	}
-	stack->data[stack->len - 1] = first;
+	stack->data[stack->len - 1] = last;
 }

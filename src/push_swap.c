@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:12:51 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 16:04:40 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/17 17:55:50 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ static void	print_instrs(const t_stack *instr)
 	}
 }
 
-static void	exec_swap(t_stack *a, t_stack *b)
+static void	exec_swap(t_stack_hld *hld)
 {
-	t_stack		*instr;
-
-	instr = stack_create(a->len * 10);
-	sort_stack(a, b, instr);
-	print_instrs(instr);
+	hld->instr = stack_create(hld->a->len * 10);
+	sort_stack(hld);
+	print_instrs(hld->instr);
+	stack_delete(&hld->instr);
 }
 
 int			main(int ac, char **av)
 {
+	t_stack_hld	hld;
 	t_stack		*a;
 	t_stack		*b;
 
@@ -48,7 +48,10 @@ int			main(int ac, char **av)
 	else if (stack_has_dup(a))
 		ft_putendl_fd("Error", 2);
 	else
-		exec_swap(a, b);
+	{
+		hld = (t_stack_hld){a, b, 0};
+		exec_swap(&hld);
+	}
 	stack_delete(&a);
 	stack_delete(&b);
 	return (0);

@@ -6,26 +6,11 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:12:39 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 16:24:01 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/17 13:16:49 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ps.h"
-
-static void	print_stack(t_stack *st, char name)
-{
-	size_t		idx;
-
-	ft_putchar(name);
-	ft_putstr(": ");
-	idx = st->len;
-	while (idx-- > 0)
-	{
-		ft_putnbr(st->data[idx]);
-		ft_putchar(' ');
-	}
-	ft_putchar('\n');
-}
 
 static void	exec_instr(t_stack *a, t_stack *b, t_stack *instr,
 		t_opts opts)

@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:53:13 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 16:45:44 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/17 12:59:48 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,3 +78,16 @@ void			write_instr(t_instr instr)
 		ft_putstr("rrr");
 }
 
+t_instr			instr_try_optimize(t_instr ins1, t_instr ins2)
+{
+	if ((ins1 == INSTR_SA && ins2 == INSTR_SB) ||
+			(ins1 == INSTR_SB && ins2 == INSTR_SA))
+		return (INSTR_SS);
+	if ((ins1 == INSTR_RA && ins2 == INSTR_RB) ||
+			(ins1 == INSTR_RB && ins2 == INSTR_RA))
+		return (INSTR_RR);
+	if ((ins1 == INSTR_RRA && ins2 == INSTR_RRB) ||
+			(ins1 == INSTR_RRB && ins2 == INSTR_RRA))
+		return (INSTR_RRR);
+	return (INSTR_NONE);
+}

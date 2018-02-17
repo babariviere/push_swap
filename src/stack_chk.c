@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:44:04 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 15:52:57 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/17 13:23:14 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@ int		stack_is_sort(const t_stack *stack)
 	{
 		if (stack->data[idx - 1] <= stack->data[idx])
 			return (0);
+	}
+	return (1);
+}
+
+int		stack_is_rsort(const t_stack *stack)
+{
+	size_t		idx;
+
+	idx = 0;
+	if (stack->len <= 1)
+		return (1);
+	while ((idx + 1) < stack->len)
+	{
+		if (stack->data[idx] >= stack->data[idx + 1])
+			return (0);
+		idx++;
 	}
 	return (1);
 }

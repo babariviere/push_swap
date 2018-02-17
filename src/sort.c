@@ -6,40 +6,11 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 15:17:10 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/16 17:10:29 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/17 19:07:14 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ps.h"
-
-static void	split_stack_a(t_stack *a, t_stack *b, t_stack *instr)
-{
-	while (a->len > b->len)
-	{
-		while (stack_cmp_top(a) > 0)
-		{
-			apply_instr_and_save(a, b, INSTR_SA, instr);
-			apply_instr_and_save(a, b, INSTR_PB, instr);
-		}
-		while (stack_cmp_bot_top(a) < 0)
-		{
-			apply_instr_and_save(a, b, INSTR_RRA, instr);
-			apply_instr_and_save(a, b, INSTR_PB, instr);
-		}
-		apply_instr_and_save(a, b, INSTR_PB, instr);
-	}
-}
-
-//void		merge_sort_a(t_stack *a, t_stack *b, t_stack *instr, size_t len)
-//{
-//	if (len <= 1)
-//		return ;
-//}
-//
-//void		merge_sort_b(t_stack *a, t_stack *b, t_stack *instr, size_t len)
-//{
-//
-//}
 
 //void		naive_sort(t_stack *a, t_stack *b, t_stack *instr)
 //{
@@ -65,11 +36,53 @@ static void	split_stack_a(t_stack *a, t_stack *b, t_stack *instr)
 //	}
 //}
 
-void		sort_stack(t_stack *a, t_stack *b, t_stack *instr)
+// TODO: recursive to estimate best move
+static void	test_sort(t_stack_hld *hld)
 {
-	if (stack_is_sort(a) && b->len == 0)
+	while (!stack_is_sort(hld->a))
+	{
+		if (stack_cmp_top(hld->a) > 0)
+			apply_instr_and_save(hld, INSTR_SA);
+		else
+			apply_instr_and_save(hld, INSTR_PB);
+		if (stack_cmp_bot_top(hld->a) < 0)
+			apply_instr_and_save(hld, INSTR_RA);
+		if (stack_cmp_bot_top(hld->b) > 0)
+			apply_instr_and_save(hld, INSTR_RB);
+		if (stack_cmp_top(hld->b) < 0)
+			apply_instr_and_save(hld, INSTR_SB);
+		if (stack_cmp_bot(hld->a) < 0)
+		{
+			apply_instr_and_save(hld, INSTR_RRA);
+			apply_instr_and_save(hld, INSTR_RRA);
+			apply_instr_and_save(hld, INSTR_SA);
+			apply_instr_and_save(hld, INSTR_RA);
+			apply_instr_and_save(hld, INSTR_RA);
+		}
+		if (stack_cmp_bot(hld->b) > 0)
+		{
+			apply_instr_and_save(hld, INSTR_RRB);
+			apply_instr_and_save(hld, INSTR_RRB);
+			apply_instr_and_save(hld, INSTR_SB);
+			apply_instr_and_save(hld, INSTR_RB);
+			apply_instr_and_save(hld, INSTR_RB);
+		}
+	}
+	while (hld->b->len > 0)
+	{
+		apply_instr_and_save(hld, INSTR_PA);
+		if (stack_cmp_top(hld->a) > 0)
+			apply_instr_and_save(hld, INSTR_SA);
+	}
+}
+
+void		sort_stack(t_stack_hld *hld)
+{
+	if (stack_is_sort(hld->a) && hld->b->len == 0)
 		return ;
-	split_stack_a(a, b, instr);
+	//split_stack_a(a, b, instr);
 	//naive_sort(a, b, instr);
-	//sort_stack(a, b, instr);
+	//small_stack_sort(a, b, instr);
+	test_sort(hld);
+	sort_stack(hld);
 }
