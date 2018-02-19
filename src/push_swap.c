@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:12:51 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/17 17:55:50 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/19 17:04:02 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	print_instrs(const t_stack *instr)
 
 static void	exec_swap(t_stack_hld *hld)
 {
+	// TODO: optimize useless repetition
 	hld->instr = stack_create(hld->a->len * 10);
 	sort_stack(hld);
 	print_instrs(hld->instr);

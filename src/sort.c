@@ -6,83 +6,89 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 15:17:10 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/17 19:07:14 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/19 17:03:09 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ps.h"
 
-//void		naive_sort(t_stack *a, t_stack *b, t_stack *instr)
-//{
-//	int		high;
-//
-//	while (!stack_is_sort(a))
-//	{
-//		high = get_highest(a);
-//		while (a->data[a->len - 1] != high)
-//		{
-//			stack_rrotate(a);
-//			stack_push(instr, INSTR_RRA);
-//		}
-//		stack_push(b, stack_pop(a));
-//		stack_push(instr, INSTR_PB);
-//	}
-//	while (b->len > 0)
-//	{
-//		stack_push(a, stack_pop(b));
-//		stack_push(instr, INSTR_PA);
-//		stack_rotate(a);
-//		stack_push(instr, INSTR_RA);
-//	}
-//}
-
-// TODO: recursive to estimate best move
-static void	test_sort(t_stack_hld *hld)
+static int	find_median(int *data, int idx, int len)
 {
-	while (!stack_is_sort(hld->a))
+	int		low;
+	int		high;
+	int		median;
+	int		tmp_len;
+
+	low = data[idx];
+	high = data[idx];
+	median = idx;
+	tmp_len = len;
+	while (len--)
 	{
-		if (stack_cmp_top(hld->a) > 0)
-			apply_instr_and_save(hld, INSTR_SA);
-		else
+		if (data[idx] > high)
+			high = data[idx];
+		else if (data[idx] < low)
+			low = data[idx];
+		idx--;
+	}
+	idx = median;
+	median = high;
+	while (tmp_len--)
+	{
+		if (low < data[idx] && data[idx] < high)
+			median = data[idx];
+		idx--;
+	}
+	return (median);
+}
+
+static int	split_list(t_stack_hld *hld, int len)
+{
+	int		median;
+	int		pushed;
+
+	median = find_median(hld->a->data, hld->a->len - 1, len);
+	pushed = 0;
+	while (len--)
+	{
+		if (ST_TOP(hld->a) < median)
+		{
 			apply_instr_and_save(hld, INSTR_PB);
-		if (stack_cmp_bot_top(hld->a) < 0)
-			apply_instr_and_save(hld, INSTR_RA);
-		if (stack_cmp_bot_top(hld->b) > 0)
-			apply_instr_and_save(hld, INSTR_RB);
-		if (stack_cmp_top(hld->b) < 0)
-			apply_instr_and_save(hld, INSTR_SB);
-		if (stack_cmp_bot(hld->a) < 0)
-		{
-			apply_instr_and_save(hld, INSTR_RRA);
-			apply_instr_and_save(hld, INSTR_RRA);
-			apply_instr_and_save(hld, INSTR_SA);
-			apply_instr_and_save(hld, INSTR_RA);
-			apply_instr_and_save(hld, INSTR_RA);
+			pushed++;
 		}
-		if (stack_cmp_bot(hld->b) > 0)
-		{
-			apply_instr_and_save(hld, INSTR_RRB);
-			apply_instr_and_save(hld, INSTR_RRB);
-			apply_instr_and_save(hld, INSTR_SB);
-			apply_instr_and_save(hld, INSTR_RB);
-			apply_instr_and_save(hld, INSTR_RB);
-		}
+		else
+			apply_instr_and_save(hld, INSTR_RA);
 	}
-	while (hld->b->len > 0)
-	{
+	return (pushed);
+}
+
+static void	quick_sort(t_stack_hld *hld, int len)
+{
+	int		pushed;
+	int		count;
+
+	if (len <= 1)
+		return ;
+	pushed = split_list(hld, len);
+	count = len - pushed;
+	while (count-- > 0)
+		apply_instr_and_save(hld, INSTR_RRA);
+	count = pushed;
+	while (count-- > 0)
 		apply_instr_and_save(hld, INSTR_PA);
-		if (stack_cmp_top(hld->a) > 0)
-			apply_instr_and_save(hld, INSTR_SA);
-	}
+	quick_sort(hld, pushed);
+	count = pushed;
+	while (count-- > 0)
+		apply_instr_and_save(hld, INSTR_RA);
+	quick_sort(hld, len - pushed);
+	count = pushed;
+	while (count-- > 0)
+		apply_instr_and_save(hld, INSTR_RRA);
 }
 
 void		sort_stack(t_stack_hld *hld)
 {
 	if (stack_is_sort(hld->a) && hld->b->len == 0)
 		return ;
-	//split_stack_a(a, b, instr);
-	//naive_sort(a, b, instr);
-	//small_stack_sort(a, b, instr);
-	test_sort(hld);
-	sort_stack(hld);
+	quick_sort(hld, hld->a->len);
 }

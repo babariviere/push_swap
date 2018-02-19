@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:13:46 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/17 18:23:51 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/19 12:50:43 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ void			stack_rrotate(t_stack *stack);
 int				stack_is_sort(const t_stack *stack);
 int				stack_is_rsort(const t_stack *stack);
 int				stack_has_dup(const t_stack *stack);
-
-int				stack_find_unsorted_top(const t_stack *stack);
 
 int				stack_cmp_top(const t_stack *st);
 int				stack_cmp_bot(const t_stack *st);
