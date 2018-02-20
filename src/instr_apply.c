@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 16:45:49 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/19 17:01:59 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/20 09:39:26 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,23 @@ void			apply_instr_and_save(t_stack_hld *hld, t_instr instr)
 	//print_stack(hld->b, 'b');
 	//sleep(1);
 	maybe = INSTR_NONE;
-	idx = hld->instr->len;
-	while (idx-- > 0)
+	if (instr_is_opposite(ST_TOP(hld->instr), instr))
+		stack_pop(hld->instr);
+	else
 	{
-		if (instr_conflict(instr, hld->instr->data[idx]))
-			break ;
-		if ((maybe = instr_try_optimize(instr, hld->instr->data[idx]))
-				!= INSTR_NONE)
+		idx = hld->instr->len;
+		while (idx-- > 0)
 		{
-			hld->instr->data[idx] = maybe;
-			break ;
+			if (instr_conflict(instr, hld->instr->data[idx]))
+				break ;
+			if ((maybe = instr_try_optimize(instr, hld->instr->data[idx]))
+					!= INSTR_NONE)
+			{
+				hld->instr->data[idx] = maybe;
+				break ;
+			}
 		}
+		if (maybe == INSTR_NONE)
+			stack_push(hld->instr, instr);
 	}
-	if (maybe == INSTR_NONE)
-		stack_push(hld->instr, instr);
 }

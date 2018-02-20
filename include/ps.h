@@ -6,7 +6,7 @@
 /*   By: briviere <briviere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/16 13:13:46 by briviere          #+#    #+#             */
-/*   Updated: 2018/02/19 12:50:43 by briviere         ###   ########.fr       */
+/*   Updated: 2018/02/20 09:37:58 by briviere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void			apply_instr_and_save(t_stack_hld *hld, t_instr instr);
 int				instr_change_a(t_instr instr);
 int				instr_change_b(t_instr instr);
 int				instr_conflict(t_instr ins1, t_instr ins2);
+int				instr_is_opposite(t_instr ins1, t_instr ins2);
 
 t_stack			*stack_create(size_t size);
 void			stack_delete(t_stack **stack);
